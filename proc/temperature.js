@@ -61,8 +61,22 @@ request("http://www.cwb.gov.tw/V7/forecast/taiwan/inc/UVI/"+code+".htm", functio
       var temperature = $('td').eq(0).text(); //體感溫度
       //console.log(temperature);
       var src = $('img').attr("src").replace('/V7/symbol/UVI/', '').replace('.gif', '');         //紫外線
+      var msg = "";
+      if(0<=src&&src<=2){
+        msg = "低量級";
+      }else if(3<=src&&src<=5){
+        msg = "中量級";
+      }else if(6<=src&&src<=7){
+        msg = "高量級";
+      }else if(8<=src&&src<=10){
+        msg = "過量級";
+      }else if(11<=src){
+        msg = "危險級";
+      }
+
+      var uv_msg = src+"("+msg+")";
       //console.log(src);
-      var description = {temperature:temperature, uvi:src};
+      var description = {temperature:temperature, uvi:uv_msg};
       //console.log(rain);
       return callback(description);     //回傳址需要物件
    }
